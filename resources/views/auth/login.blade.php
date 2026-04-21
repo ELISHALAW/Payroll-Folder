@@ -21,7 +21,8 @@
                 @endif
 
                 <div class="mt-8">
-                    <form action="#" method="POST" class="space-x-y-6 space-y-5">
+                    <form action="{{ route('login.authenticate') }}" method="POST" class="space-x-y-6 space-y-5">
+                        @csrf
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
                             <input id="email" type="email" name="email" required
@@ -55,7 +56,8 @@
                     <div class="mt-6 text-center">
                         <p class="text-sm text-gray-600">
                             Don't have an account?
-                            <a href="#" class="font-bold text-blue-600 hover:text-blue-500">Sign up here</a>
+                            <a href="{{ route('register') }}" class="font-bold text-blue-600 hover:text-blue-500">Sign up
+                                here</a>
                         </p>
                     </div>
                 </div>

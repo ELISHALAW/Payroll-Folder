@@ -34,3 +34,25 @@ window.switchForm = function (type) {
         sidebarDesc.innerText = "Please provide your official business details to initialize the system.";
     }
 }
+
+
+window.toggleDropdown = function () {
+    const menu = document.getElementById('dropdownMenu');
+
+    if (menu) {
+        menu.classList.toggle('hidden');
+    }
+}
+
+// Close the dropdown if the user clicks anywhere else
+document.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('click', function (e) {
+        const menu = document.getElementById('dropdownMenu');
+        const button = e.target.closest('button');
+
+        // If the click is NOT on the button/menu and menu is open, hide it
+        if (!button && !menu.classList.contains('hidden')) {
+            menu.classList.add('hidden');
+        }
+    });
+})

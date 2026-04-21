@@ -9,33 +9,42 @@
                 </div>
 
                 <div class="hidden md:ml-8 md:flex md:space-x-8">
-                    <a href="#"
+                    <a href="{{ route('home') }}"
                         class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         Dashboard
                     </a>
                     <a href="#"
                         class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                        Run Payroll
+                        Users
                     </a>
                     <a href="#"
                         class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                        Employees
+                        Leave
                     </a>
                     <a href="#"
                         class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                        Reports
+                        Benefits
+                    </a>
+                    <a href="#"
+                        class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Insurance
+                    </a>
+                    <a href="#"
+                        class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Investment
+                    </a>
+                    <a href="#"
+                        class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Claims
+                    </a>
+                    <a href="#"
+                        class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Hadir
                     </a>
                 </div>
             </div>
 
             <div class="flex items-center space-x-4">
-                <button class="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none hidden sm:block">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </button>
-
                 @guest
 
                     <a href="{{ route('login') }}"
@@ -50,12 +59,54 @@
 
 
                 @auth
-                    <div class="flex items-center space-x-4">
-                        <span class="text-sm font-medium text-gray-700">
-                            {{ Auth::user()->name }}
-                        </span>
+                    <div class="relative inline-block text-left">
 
+                        <button type="button" onclick="toggleDropdown()"
+                            class="flex items-center space-x-3 focus:outline-none cursor-pointer">
+                            <div class="text-gray-300">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                </svg>
+                            </div>
 
+                            <div class="flex items-center space-x-1">
+                                <span class="text-sm font-medium text-gray-600">
+                                    {{ Auth::user()->name }}
+                                </span>
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </button>
+
+                        <div id="dropdownMenu"
+                            class="hidden absolute right-0 z-50 mt-2 w-56 origin-top-right bg-white shadow-xl ring-1 ring-black ring-opacity-5 rounded-sm">
+                            <div class="h-[3px] bg-[#36a3b7] w-full"></div>
+
+                            <div class="py-1">
+                                <a href="#"
+                                    class="cursor-pointer block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                    Reset Password
+                                </a>
+
+                                <a href="#"
+                                    class="cursor-pointer block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                    Settings
+                                </a>
+
+                                <div class="my-1 border-t border-gray-100"></div>
+
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="cursor-pointer block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                        Log Out
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 @endauth
                 <div class="flex items-center md:hidden">
