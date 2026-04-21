@@ -3,63 +3,81 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        return view('auth.register');
+        return view('auth.register'); // Make sure this path matches your blade file
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        // 1. Validation
+        // Note: 'user_name' and 'mobile' are included based on your new fields
+        $request->validate([
+            // Company Fields
+            'name' => 'required|string|max:255',
+            'registration_no' => 'required|string|unique:companies,registration_no',
+            'address' => 'required|string',
+            'city' => 'required|string',
+            'postcode' => 'required|string',
+            'state' => 'required|string',
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+            // User Fields
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'mobile' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        try {
+            // 2. Database Transaction
+            // This ensures both operations succeed together
+            $user = DB::transaction(function () use ($request) {
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+                // 3. Create the Company
+                $company = Company::create([
+                    'name' => $request->name,
+                    'registration_no' => $request->registration_no,
+                    'sst_no' => $request->sst_no,
+                    'address' => $request->address,
+                    'city' => $request->city,
+                    'postcode' => $request->postcode,
+                    'state' => $request->state,
+                    'country' => 'Malaysia', // Default as per your DB screenshot
+                    'epf_employer_no' => $request->epf_employer_no,
+                    'socso_employer_no' => $request->socso_employer_no,
+                    'tax_employer_no' => $request->tax_employer_no,
+                ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+                // 4. Create the Admin User
+                return User::create([
+                    'company_id' => $company->id, // Linking user to the new company
+                    'name' => $request->user_name,
+                    'email' => $request->email,
+                    'mobile' => $request->mobile,
+                    'password' => Hash::make($request->password),
+                    'role' => $request->role ?? 1, // Default to 1 (Admin)
+                    'status' => $request->status ?? 'active',
+                ]);
+            });
+
+            // 5. Log the user in and redirect
+            Auth::login($user);
+
+            return redirect()->route('dashboard')->with('success', 'System Initialized Successfully!');
+        } catch (\Exception $e) {
+            // If anything fails, return with error
+            return back()->withInput()->withErrors(['error' => 'Registration failed. Please try again. ' . $e->getMessage()]);
+        }
     }
 }

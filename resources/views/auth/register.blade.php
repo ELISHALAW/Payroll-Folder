@@ -1,108 +1,177 @@
 @extends('output.layout')
 @section('content')
-    <div class="min-h-screen bg-[#f0f4f8] flex items-center justify-center p-4 antialiased">
-        <div
-            class="w-full max-w-5xl bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(8,112,184,0.07)] overflow-hidden flex flex-col lg:flex-row min-h-[650px]">
+    <div class="min-h-screen flex flex-col md:flex-row bg-white">
 
-            <div class="lg:w-5/12 bg-[#0052cc] p-12 text-white flex flex-col justify-between relative">
-                <div
-                    class="absolute top-0 right-0 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -mr-20 -mt-20">
+        <div class="w-full md:w-[40%] flex items-center justify-center p-8 lg:p-16">
+            <div class="w-full max-w-md">
+                <div class="mb-10">
+                    <h2 class="text-3xl font-black text-slate-900 tracking-tighter">
+                        360 <span class="text-blue-600">Interactive</span>
+                    </h2>
+                    <p class="text-slate-500 mt-2">Initialize your account to get started.</p>
                 </div>
-                <div
-                    class="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -ml-10 -mb-10">
-                </div>
-
-                <div class="relative z-10">
-                    <div class="flex items-center gap-3 mb-16">
-                        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
-                            <div class="w-5 h-5 bg-blue-600 rounded-sm transform rotate-45"></div>
-                        </div>
-                        <h2 class="text-2xl font-black tracking-tighter uppercase">360<span
-                                class="font-normal opacity-70">Interactive</span></h2>
+                @if ($errors->any())
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50">
+                        {{ $errors->first() }}
                     </div>
+                @endif
 
-                    <div class="space-y-10">
-                        <div>
-                            <h3 class="text-4xl font-bold leading-tight tracking-tight">Setup your<br />Master Account.</h3>
-                            <p class="mt-4 text-blue-100/70 leading-relaxed max-w-xs">Initialize the core administrative
-                                layer for the Malaysia Payroll System v2.0.</p>
+                <div class="flex bg-slate-100 p-1 rounded-xl mb-8">
+                    <button type="button" id="btn-company" onclick="switchForm('company')"
+                        class="cursor-pointer flex-1 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all bg-white text-blue-600 shadow-sm">
+                        Company
+                    </button>
+                    <button type="button" id="btn-user" onclick="switchForm('user')"
+                        class="cursor-pointer flex-1 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all text-slate-400 hover:text-slate-600">
+                        User
+                    </button>
+                </div>
+
+                <form action="{{ route('register.store') }}" method="POST">
+                    @csrf
+
+                    <div id="company-section" class="space-y-5">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-700">Company Legal Name</label>
+                            <input name="name" type="text" placeholder="e.g. 360 Interactive Sdn Bhd"
+                                class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 focus:bg-white transition-all">
                         </div>
 
-                        <div class="grid grid-cols-1 gap-6 pt-6">
-                            <div
-                                class="flex items-center gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-md">
-                                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-                                <span class="text-sm font-semibold opacity-90 tracking-wide">System Status: Ready</span>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">Registration No (SSM)</label>
+                                <input name="registration_no" type="text" placeholder="2024010..."
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all">
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative z-10">
-                    <div
-                        class="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-blue-200/40">
-                        <span>Admin Protocol</span>
-                        <span>© 2026</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:w-7/12 bg-white p-10 lg:p-20 flex flex-col justify-center">
-                <div class="max-w-md mx-auto w-full">
-                    <div class="mb-12">
-                        <h4 class="text-3xl font-extrabold text-slate-900 tracking-tight">Registration</h4>
-                        <div class="h-1.5 w-12 bg-blue-600 rounded-full mt-3"></div>
-                    </div>
-
-                    <form action="#" method="POST" class="space-y-7">
-                        @csrf
-
-                        <div class="relative group">
-                            <label
-                                class="absolute -top-3 left-4 bg-white px-2 text-[11px] font-black text-slate-400 uppercase tracking-widest group-focus-within:text-blue-600 transition-all">Full
-                                Name</label>
-                            <input name="name" type="text" required placeholder="Law Seong Chun"
-                                class="w-full border-2 border-slate-100 rounded-2xl px-6 py-4 text-slate-700 font-medium focus:border-blue-500 outline-none transition-all placeholder:text-slate-200">
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="relative group">
-                                <label
-                                    class="absolute -top-3 left-4 bg-white px-2 text-[11px] font-black text-slate-400 uppercase tracking-widest group-focus-within:text-blue-600 transition-all">Email</label>
-                                <input name="email" type="email" required placeholder="admin@360i.com"
-                                    class="w-full border-2 border-slate-100 rounded-2xl px-6 py-4 text-slate-700 font-medium focus:border-blue-500 outline-none transition-all placeholder:text-slate-200">
-                            </div>
-                            <div class="relative group">
-                                <label
-                                    class="absolute -top-3 left-4 bg-white px-2 text-[11px] font-black text-slate-400 uppercase tracking-widest group-focus-within:text-blue-600 transition-all">Mobile</label>
-                                <input name="mobile" type="text" placeholder="+60 1x-xxx xxxx"
-                                    class="w-full border-2 border-slate-100 rounded-2xl px-6 py-4 text-slate-700 font-medium focus:border-blue-500 outline-none transition-all placeholder:text-slate-200">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">SST No</label>
+                                <input name="sst_no" type="text" placeholder="W10-..."
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all">
                             </div>
                         </div>
 
-                        <div class="relative group">
-                            <label
-                                class="absolute -top-3 left-4 bg-white px-2 text-[11px] font-black text-slate-400 uppercase tracking-widest group-focus-within:text-blue-600 transition-all">Security
-                                Password</label>
-                            <input name="password" type="password" required placeholder="••••••••••••"
-                                class="w-full border-2 border-slate-100 rounded-2xl px-6 py-4 text-slate-700 font-medium focus:border-blue-500 outline-none transition-all placeholder:text-slate-200">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-700">Full Address</label>
+                            <input name="address" type="text" placeholder="Street address"
+                                class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all">
                         </div>
 
-                        <div class="pt-4">
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">City</label>
+                                <input name="city" type="text" placeholder="City"
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all text-sm">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">Postcode</label>
+                                <input name="postcode" type="text" placeholder="50000"
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all text-sm">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">State</label>
+                                <input name="state" type="text" placeholder="Selangor"
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all text-sm">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">EPF No</label>
+                                <input name="epf_employer_no" type="text" placeholder="EPF"
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all text-sm">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">SOCSO No</label>
+                                <input name="socso_employer_no" type="text" placeholder="SOCSO"
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all text-sm">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">Tax No</label>
+                                <input name="tax_employer_no" type="text" placeholder="Tax"
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all text-sm">
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="switchForm('user')"
+                            class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all mt-4">
+                            Next: Admin Setup
+                        </button>
+                    </div>
+                    <div id="user-section" class="hidden space-y-5">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-700">Admin Full Name</label>
+                            <input name="user_name" type="text" placeholder="John Doe"
+                                class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">Email Address</label>
+                                <input name="email" type="email" placeholder="name@company.com"
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">Mobile Number</label>
+                                <input name="mobile" type="text" placeholder="012-3456789"
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">Password</label>
+                                <input name="password" type="password" placeholder="••••••••"
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">Confirm Password</label>
+                                <input name="password_confirmation" type="password" placeholder="••••••••"
+                                    class="w-full bg-blue-50/50 border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:border-blue-500 transition-all">
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="role" value="1"> <input type="hidden" name="status"
+                            value="active">
+
+                        <div class="flex gap-3 pt-4">
+                            <button type="button" onclick="switchForm('company')"
+                                class="flex-1 bg-slate-100 text-slate-500 font-bold py-4 rounded-xl hover:bg-slate-200 transition-all text-sm">Back</button>
                             <button type="submit"
-                                class="w-full bg-slate-900 hover:bg-blue-600 text-white font-black py-5 rounded-2xl shadow-xl shadow-slate-200 hover:shadow-blue-200 transform transition-all duration-300 flex items-center justify-center gap-4 group">
-                                <span class="tracking-wider uppercase text-sm">Initialize System Admin</span>
-                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2.5" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
+                                class="flex-[2] bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all text-sm">
+                                Initialize System
                             </button>
                         </div>
-                    </form>
+                    </div>
+                </form>
 
-                    <p class="mt-12 text-center text-xs font-bold text-slate-300 uppercase tracking-[0.3em]">Secure
-                        Initialization Portal</p>
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-slate-500">Already have an account? <a href="/login"
+                            class="text-blue-600 font-bold hover:underline">Log in here</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden md:flex md:w-[60%] bg-blue-600 items-center justify-center p-12 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-400/20 rounded-full -ml-10 -mb-10 blur-2xl"></div>
+
+            <div class="relative z-10 text-center text-white max-w-2xl">
+                <h1 class="text-5xl font-extrabold leading-tight mb-6">
+                    The #1 HR Platform in Malaysia
+                </h1>
+                <p class="text-blue-100 text-lg mb-10 opacity-90">
+                    Trusted by 20,000+ companies to handle Payroll, Leave, Claims, and Benefits automatically.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <span
+                        class="px-4 py-2 border border-white/30 rounded-lg text-xs font-bold tracking-widest uppercase bg-white/10">LHDN
+                        Compliant</span>
+                    <span
+                        class="px-4 py-2 border border-white/30 rounded-lg text-xs font-bold tracking-widest uppercase bg-white/10">KWSP/SOCSO</span>
+                    <span
+                        class="px-4 py-2 border border-white/30 rounded-lg text-xs font-bold tracking-widest uppercase bg-white/10">PDPA
+                        Secure</span>
                 </div>
             </div>
         </div>
