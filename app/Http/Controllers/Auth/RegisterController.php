@@ -67,14 +67,14 @@ class RegisterController extends Controller
                     'mobile' => $request->mobile,
                     'password' => Hash::make($request->password),
                     'role' => $request->role ?? 1, // Default to 1 (Admin)
-                    'status' => $request->status ?? 'active',
+                    'status' => 1, // 1 represents 'active' as a number
                 ]);
             });
 
             // 5. Log the user in and redirect
             Auth::login($user);
 
-            return redirect()->route('dashboard')->with('success', 'System Initialized Successfully!');
+            return redirect()->route('login')->with('success', 'Registration successful! Please log in to continue.');
         } catch (\Exception $e) {
             // If anything fails, return with error
             return back()->withInput()->withErrors(['error' => 'Registration failed. Please try again. ' . $e->getMessage()]);

@@ -14,11 +14,17 @@
                     </p>
                 </div>
 
+                @if ($errors->any())
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
                 <div class="mt-8">
                     <form action="#" method="POST" class="space-x-y-6 space-y-5">
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                            <input id="email" type="email" required
+                            <input id="email" type="email" name="email" required
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-3 border">
                         </div>
 
@@ -28,7 +34,7 @@
                                 <a href="#" class="text-xs font-semibold text-blue-600 hover:text-blue-500">Forgot
                                     password?</a>
                             </div>
-                            <input id="password" type="password" required
+                            <input id="password" type="password" name="password" required
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-3 border">
                         </div>
 
