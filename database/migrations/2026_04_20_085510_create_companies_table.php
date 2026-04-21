@@ -13,8 +13,26 @@ return new class extends Migration
     {
         // 1. Create Companies (Parent)
         Schema::create('companies', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // BIGINT
             $table->string('name')->nullable();
+            $table->string('registration_no')->comment('SSM Number');
+
+            // Location Details
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('postcode')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->default('Malaysia');
+
+            // Tax & Business IDs
+            $table->string('sst_no')->nullable();
+
+            // Malaysian Statutory Employer Numbers
+            $table->string('epf_employer_no', 45)->nullable();
+            $table->string('socso_employer_no', 45)->nullable();
+            $table->string('tax_employer_no', 45)->nullable();
+
+            // Standard Timestamps (handles created_at and updated_at)
             $table->timestamps();
         });
 
