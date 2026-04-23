@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\Authenticate;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -9,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 // 1. Simplified Static Routes
 Route::view('/', 'welcome')->name('home');
 
-// 2. Guest-Only Routes (Login/Register)
+// 2. Guest-Only Routes (Login/Register/Reset)
 Route::middleware('guest')->group(function () {
 
     // Register Group
@@ -24,14 +23,16 @@ Route::middleware('guest')->group(function () {
         Route::post('login', 'authenticate')->name('login.authenticate');
     });
 
-    // Password Reset
-    Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPassword'])
-        ->name('password.reset');
+    // Password Reset Group
+    Route::controller(ForgotPasswordController::class)->group(function () {
+        Route::get('send-Email', 'index')->name('auth.sendEmail');
+        Route::post('forgot-password', 'sendResetLinkEmail')->name('password.email');
+        Route::get('reset-password/{token}', 'showResetPassword')->name('password.reset');
 
-    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-
-
-    Route::get('send-Email/',[ForgotPasswordController::class,'index'])->name('auth.sendEmail');
+        Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])
+    ->name('password.update');
+    });
+    
 });
 
 // 3. Authenticated-Only Routes

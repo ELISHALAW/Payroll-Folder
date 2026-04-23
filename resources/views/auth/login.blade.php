@@ -32,7 +32,8 @@
                         <div>
                             <div class="flex items-center justify-between">
                                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                                <a href="{{route('auth.sendEmail')}}" class="text-xs font-semibold text-blue-600 hover:text-blue-500">Forgot
+                                <a href="{{ route('auth.sendEmail') }}"
+                                    class="text-xs font-semibold text-blue-600 hover:text-blue-500">Forgot
                                     password?</a>
                             </div>
                             <input id="password" type="password" name="password" required
