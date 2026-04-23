@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('statutory_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 50);
+            $table->string('description', 50);
             $table->timestamps();
         });
     }

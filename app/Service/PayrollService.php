@@ -4,11 +4,11 @@ namespace App\Service;
 
 class PayrollService
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
-    {
-        //
+    public function calculate($basic_salary, $allowance, $pcb = 0) {
+
+        $vars = config('payrollVariable');
+        $ceiling = $vars['ceiling'];
+
+        $gross_salary = $basic_salary + $allowance;
     }
 }

@@ -45,13 +45,14 @@ return new class extends Migration
         // 4. Create Employees (Depends on all the above)
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable();
             $table->foreignId('company_id')->nullable()->constrained();
             $table->foreignId('position_id')->nullable()->constrained('positions');
             $table->foreignId('department_id')->nullable()->constrained('departments');
-
+            $table->foreignId('category_id')->nullable()->constrained('statutory_categories');
             $table->string('employee_no', 45)->nullable();
             $table->date('join_date')->nullable();
+            $table->string('Highest_qualification', 50);
             $table->string('salary_type', 45)->nullable();
             $table->string('ic_number', 12)->unique()->nullable();
             $table->string('epf_no', 45)->nullable();

@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('employee_permanent_addresses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
+            $table->string('address',500);
+            $table->string('city',255);
+            $table->string('postcode',20);
+            $table->string('region',255);
+            $table->string('country',255)->default('Malaysia');
             $table->timestamps();
         });
     }

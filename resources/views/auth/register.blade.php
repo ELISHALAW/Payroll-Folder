@@ -95,7 +95,7 @@
                         <button type="button" onclick="switchForm('user')"
                             class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all mt-4">
                             Next: Admin Setup
-                                        </button>
+                        </button>
                     </div>
                     <div id="user-section" class="hidden space-y-5">
                         <div class="space-y-1">

@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('statutory_rates', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained('statutory_categories')->onDelete('cascade');
+            $table->string('type',50);
+            $table->decimal('min_salary',10,2)->default(0.00);
+            $table->decimal('max_salary',10,2)->default(2500.00);
+            $table->decimal('employee_rate',5,4)->nullable();
+            $table->decimal('employer_rate',5,4)->nullable();
+            $table->decimal('fixed_amount_employee',10,2)->nullable();
+            $table->decimal('fixed_amount_employer',10,2)->nullable();
+            $table->date('effective_date');
+
             $table->timestamps();
         });
     }

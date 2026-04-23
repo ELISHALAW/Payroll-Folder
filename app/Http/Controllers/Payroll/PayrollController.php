@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class PayrollController extends Controller
 {
     protected $payrollService;
+    
     public function __construct(PayrollService $payrollService)
     {
         $this->payrollService = $payrollService;
