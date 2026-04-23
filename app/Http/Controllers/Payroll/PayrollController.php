@@ -3,19 +3,23 @@
 namespace App\Http\Controllers\Payroll;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Service\PayrollService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PayrollController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $payrollService;
+    public function __construct(PayrollService $payrollService)
+    {
+        $this->payrollService = $payrollService;
+    }
     public function index()
     {
         $user = Auth::user();
 
-        return view('payroll.payroll', compact('user'));
+        return view('payroll.payrolls', compact('user'));
     }
 
     /**
@@ -32,6 +36,8 @@ class PayrollController extends Controller
     public function store(Request $request)
     {
         //
+
+        $basic_salary = $request->input('basic_salary');
     }
 
     /**

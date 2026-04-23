@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Payroll\PayrollController;
 use Illuminate\Support\Facades\Route;
 
 // 1. Simplified Static Routes
@@ -30,12 +31,12 @@ Route::middleware('guest')->group(function () {
         Route::get('reset-password/{token}', 'showResetPassword')->name('password.reset');
 
         Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])
-    ->name('password.update');
+            ->name('password.update');
     });
-    
 });
 
 // 3. Authenticated-Only Routes
 Route::middleware('auth')->group(function () {
+    Route::get('/payroll/{id}', [PayrollController::class, 'index'])->name('payroll.payrolls');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

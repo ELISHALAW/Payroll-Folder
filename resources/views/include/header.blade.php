@@ -21,10 +21,17 @@
                         class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         Leave
                     </a>
-                    <a href="#"
-                        class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                        Payroll
-                    </a>
+                    @auth
+                        <a href="{{ route('payroll.payrolls', ['id' => Auth::id()]) }}"
+                            class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Payroll
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Payroll
+                        </a>
+                    @endauth
                     <a href="#"
                         class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         Claims
