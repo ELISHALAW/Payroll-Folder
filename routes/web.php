@@ -37,6 +37,12 @@ Route::middleware('guest')->group(function () {
 
 // 3. Authenticated-Only Routes
 Route::middleware('auth')->group(function () {
-    Route::get('/payroll', [PayrollController::class, 'index'])->name('payroll.payrolls');
+    Route::prefix('payroll')->name('payroll.')->group(function () {
+        // This creates the name: payroll.payrolls (URL: /payroll)
+        Route::get('/', [PayrollController::class, 'index'])->name('payrolls');
+
+        // This creates the name: payroll.process (URL: /payroll/process)
+        Route::post('/process', [PayrollController::class, 'store'])->name('process');
+    });
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
