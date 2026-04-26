@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Payroll;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Service\PayrollService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,65 +10,48 @@ use Illuminate\Support\Facades\Auth;
 class PayrollController extends Controller
 {
     protected $payrollService;
-    
+
     public function __construct(PayrollService $payrollService)
     {
         $this->payrollService = $payrollService;
     }
+
     public function index()
     {
         $user = Auth::user();
-
         return view('payroll.payrolls', compact('user'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Handle Calculation Only
      */
     public function store(Request $request)
     {
-        //
+        // If someone accidentally triggers a GET, just send them back to the form
+        if ($request->isMethod('get')) {
+            return redirect()->route('payroll.payrolls');
+        }
 
-        $basic_salary = $request->input('basic_salary');
-    }
+        // 1. Validation
+        $request->validate([
+            'basic_salary'   => 'required|numeric|min:0',
+            'total_earnings' => 'nullable|numeric|min:0',
+        ]);
+        $basic = $request->input('basic_salary');
+        $allowance = $request->input('total_earning');
+        $gross_salary = $basic + $allowance;
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        // 2. Perform Math via Service
+        $results = $this->payrollService->calculate(
+            $request->input('basic_salary'),
+            $request->input('total_earnings', 0)
+        );
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $results['gross_salary'] = $gross_salary;
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // 3. Redirect back with data
+        return redirect()->back()
+            ->withInput()
+            ->with('payroll', $results);
     }
 }

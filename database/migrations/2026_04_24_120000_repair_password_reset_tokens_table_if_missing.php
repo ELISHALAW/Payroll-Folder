@@ -27,10 +27,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if (! Schema::hasTable('password_reset_tokens')) {
-            return;
-        }
-
-        Schema::drop('password_reset_tokens');
+        // Intentionally no-op:
+        // this migration only repairs missing system tables and should not
+        // drop potentially active production data during rollback.
     }
 };

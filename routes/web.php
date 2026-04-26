@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [PayrollController::class, 'index'])->name('payrolls');
 
         // This creates the name: payroll.process (URL: /payroll/process)
-        Route::post('/process', [PayrollController::class, 'store'])->name('process');
+        Route::match(['get', 'post'], '/process', [PayrollController::class, 'store'])->name('process');
     });
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

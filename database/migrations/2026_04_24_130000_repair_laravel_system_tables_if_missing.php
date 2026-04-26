@@ -83,28 +83,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if (Schema::hasTable('failed_jobs')) {
-            Schema::drop('failed_jobs');
-        }
-
-        if (Schema::hasTable('job_batches')) {
-            Schema::drop('job_batches');
-        }
-
-        if (Schema::hasTable('jobs')) {
-            Schema::drop('jobs');
-        }
-
-        if (Schema::hasTable('cache_locks')) {
-            Schema::drop('cache_locks');
-        }
-
-        if (Schema::hasTable('cache')) {
-            Schema::drop('cache');
-        }
-
-        if (Schema::hasTable('sessions')) {
-            Schema::drop('sessions');
-        }
+        // Intentionally no-op:
+        // this migration only repairs missing Laravel system tables and should
+        // not drop potentially active runtime data during rollback.
     }
 };
