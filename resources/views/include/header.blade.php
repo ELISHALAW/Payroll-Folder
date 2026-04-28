@@ -106,7 +106,7 @@
                                     Reset Password
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('settings.user', ['id' => Auth::id()]) }}"
                                     class="cursor-pointer block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                     Settings
                                 </a>

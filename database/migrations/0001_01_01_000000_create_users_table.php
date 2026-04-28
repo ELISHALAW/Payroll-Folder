@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+
             $table->id();
             $table->string('name')->unique();
             $table->string('email')->nullable();
@@ -45,8 +46,18 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
+
+        Schema::disableForeignKeyConstraints();
+
+        // 2. Drop "Child" tables first (Tables that HAVE the foreign keys)
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('employees');
+        Schema::dropIfExists('positions');
+        Schema::dropIfExists('departments');
+        Schema::dropIfExists('password_reset_tokens');
+
+        // 3. Drop "Parent" tables last (Tables that OTHERS point to)
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('companies');
     }
 };

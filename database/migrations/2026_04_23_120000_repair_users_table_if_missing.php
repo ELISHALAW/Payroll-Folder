@@ -39,6 +39,13 @@ return new class extends Migration
             return;
         }
 
+        // 1. Tell MySQL to ignore dependencies for a moment
+        Schema::disableForeignKeyConstraints();
+
+        // 2. Drop the table
         Schema::drop('users');
+
+        // 3. Turn the safety checks back on
+        Schema::enableForeignKeyConstraints();
     }
 };

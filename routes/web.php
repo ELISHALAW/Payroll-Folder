@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Payroll\PayrollController;
+use App\Http\Controllers\Settings\BasicDetailController;
+use App\Http\Controllers\Settings\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 // 1. Simplified Static Routes
@@ -37,12 +39,21 @@ Route::middleware('guest')->group(function () {
 
 // 3. Authenticated-Only Routes
 Route::middleware('auth')->group(function () {
-    Route::prefix('payroll')->name('payroll.')->group(function () {
-        // This creates the name: payroll.payrolls (URL: /payroll)
-        Route::get('/', [PayrollController::class, 'index'])->name('payrolls');
+    Route::prefix('settings')->name('settings.')->group(function () {
+        Route::get('/{id}', [SettingsController::class, 'index'])->name('user');
 
-        // This creates the name: payroll.process (URL: /payroll/process)
+        Route::prefix('company')->name('company.')->group(function () {
+            // Basic Details Route
+            Route::get('/basic/{id}', [BasicDetailController::class, 'index'])->name('basic');
+
+            // Add more here later (Bank, Other, etc.)
+        });
+    });
+
+    Route::prefix('payroll')->name('payroll.')->group(function () {
+        Route::get('/', [PayrollController::class, 'index'])->name('payrolls');
         Route::match(['get', 'post'], '/process', [PayrollController::class, 'store'])->name('process');
     });
+
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

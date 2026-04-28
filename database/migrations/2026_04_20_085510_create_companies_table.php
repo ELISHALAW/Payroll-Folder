@@ -47,7 +47,7 @@ return new class extends Migration
             $table->id(); // [cite: 57]
 
             // Relational keys
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete(); // [cite: 92]
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade'); // [cite: 92]
             $table->foreignId('manager_id')->nullable()->constrained('employees')->nullOnDelete()->comment('Reports to');
             $table->foreignId('company_id')->nullable()->constrained()->cascadeOnDelete(); // [cite: 93]
             $table->foreignId('position_id')->nullable()->constrained()->nullOnDelete(); // [cite: 98]
