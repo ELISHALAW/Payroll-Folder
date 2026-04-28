@@ -60,14 +60,14 @@
                         <div class="space-y-1">
                             <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Registration
                                 Number</span>
-                            <input type="text" name="registration_number" value="32452324"
+                            <input type="text" name="registration_number" value="{{ $company->registration_no }}"
                                 class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-sm transition-all outline-none text-gray-700">
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
-                    <label class="text-sm font-semibold text-gray-700 pt-2">Operating Locations</label>
+                    <label class="text-sm font-semibold text-gray-700 pt-2">City</label>
                     <div class="md:col-span-3">
                         <div
                             class="flex flex-wrap gap-2 p-2.5 bg-gray-50 border border-gray-200 rounded-lg focus-within:bg-white focus-within:ring-2 focus-within:ring-cyan-500/20 focus-within:border-cyan-500 transition-all">
@@ -79,7 +79,7 @@
                             </span>
                             <input type="text"
                                 class="bg-transparent border-none outline-none text-sm min-w-[150px] placeholder-gray-400"
-                                placeholder="Type location and press enter...">
+                                placeholder="Type location and press enter..." value="{{ $company->city }}">
                         </div>
                         <p class="mt-2 text-[11px] text-gray-400 italic">Example: Singapore, Johor, or Penang.</p>
                     </div>
@@ -91,8 +91,8 @@
                         <div class="space-y-1">
                             <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Primary
                                 Address</span>
-                            <textarea name="primary_address" rows="3"
-                                class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-sm transition-all outline-none text-gray-700">21-1A, Jalan Perdana 4/8, Pandan Perdana, 55300 Kuala Lumpur, Selangor</textarea>
+                            <textarea name="primary_address" rows="3" value="{{ $company->address }}"
+                                class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-sm transition-all outline-none text-gray-700">{{ $company->address }}</textarea>
                         </div>
                         <div class="space-y-1">
                             <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Phone Number</span>
@@ -100,7 +100,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <span class="text-gray-400 text-xs font-semibold">+60</span>
                                 </div>
-                                <input type="text" name="phone" value="12312312"
+                                <input type="text" name="phone" value="{{ $company->phone_no }}"
                                     class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-sm transition-all outline-none text-gray-700">
                             </div>
                         </div>

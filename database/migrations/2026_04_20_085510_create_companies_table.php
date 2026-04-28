@@ -12,7 +12,9 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->string('logo')->nullable(); // Removed ->after()
             $table->string('registration_no')->comment('SSM Number');
+            $table->string('phone_no')->nullable(); // Removed ->after()
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('postcode')->nullable();
