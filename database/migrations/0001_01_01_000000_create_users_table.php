@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-          
+
             $table->id();
             $table->string('name')->unique();
             $table->string('email')->nullable();
@@ -23,8 +23,6 @@ return new class extends Migration
             $table->string('role', 50)->nullable()->comment('Role 1 is admin, Role 2 is user');
             $table->tinyInteger('status')->nullable();
             $table->timestamps();
-
-            
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -48,7 +46,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-       
+
         // 1. Disable checks
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('companies');

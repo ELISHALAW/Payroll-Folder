@@ -405,6 +405,59 @@ return new class extends Migration
             $table->string('tax_category', 50);
             $table->timestamps();
         });
+
+        Schema::create('payslip_items', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('payslip_id')->constrained()->onDelete('cascade');
+            $table->string('type', 50);
+            $table->string('name', 45);
+            $table->decimal('amount', 10, 2);
+            $table->timestamps();
+        });
+
+        Schema::create('bank_payment_batches', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->foreignId('bank_account_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('batch_reference', 50);
+            $table->decimal('total_amount', 10, 2);
+            $table->integer('total_records');
+            $table->date('payment_date');
+            $table->string('status', 50);
+            $table->string('file_path', 255);
+            $table->timestamps();
+        });
+
+        Schema::create('working_days', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->string('day_of_week', 45);
+            $table->string('type', 45);
+            $table->tinyInteger('is_public_holiday_off');
+            $table->timestamps();
+        });
+
+        Schema::create('public_holidays', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->datetime('holiday_date');
+            $table->string('name', 45);
+            $table->string('state', 100);
+            $table->tinyInteger('is_recurring');
+            $table->timestamps();
+        });
+
+        Schema::create('employee_terminations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
+            $table->string('termination_type', 40);
+            $table->date('last_working_date');
+            $table->tinyInteger('notice_period_met');
+            $table->text('reason');
+            $table->string('settlement_status', 50);
+            $table->timestamps();
+        });
     }
 
     public function down(): void
@@ -413,6 +466,11 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         // 2. Drop all tables created in the up() method
+        Schema::dropIfExists('bank_payment_batch_items');
+
+        Schema::dropIfExists('working_days');
+        Schema::dropIfExists('bank_payment_batches');
+        Schema::dropIfExists('payslips_item');
         Schema::dropIfExists('employee_tax_profiles');
         Schema::dropIfExists('leave_approvals');
         Schema::dropIfExists('leave_calender_events');
